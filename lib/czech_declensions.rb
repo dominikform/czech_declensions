@@ -1,3 +1,4 @@
+# coding: utf-8
 require "czech_declensions/version"
 
 module CzechDeclensions
