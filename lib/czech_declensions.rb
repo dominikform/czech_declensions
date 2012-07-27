@@ -3,9 +3,9 @@ require "czech_declensions/version"
 
 module CzechDeclensions
 
-  def initialize
+  def self.initialize
     @vzor = []
-    @isdbgmode = 0
+    @isdbgmode = false
     #
     # Přídavná jména a zájmena
     #
@@ -557,17 +557,18 @@ module CzechDeclensions
   end
 
   def self.sklonovani(slovo,pad)
+    initialize
     on_sklonuj(slovo)
     #puts @astrtvar.inspect
     return @astrtvar[pad]
   end
 
-  def on_sklonuj(vstup)
+  def self.on_sklonuj(vstup)
     slova = vstup.split(" ")
     @prefrod = "0"
     slova.reverse.each do |slovo|
       # vysklonovani
-      skl2(slovo)
+      CzechDeclensions.skl2(slovo)
       # vynuceni rodu podle posledniho slova
       @prefrod = @astrtvar[0][0] if slovo == slova.first
       # pokud nenajdeme vzor tak nesklonujeme
@@ -579,7 +580,7 @@ module CzechDeclensions
     end 
   end
 
-  def isshoda(vz,txt)
+  def self.isshoda(vz,txt)
     txt = txt.mb_chars.downcase
     vz = vz.mb_chars.downcase
     i = vz.mb_chars.length
@@ -632,14 +633,20 @@ module CzechDeclensions
     return -1    
   end
 
-  def skl2(slovo)
+  def self.skl2(slovo)
 
     @astrtvar[0] = "???"
     for ii in 1..14 do
       @astrtvar[ii] = ""
     end
 
-    flgv1 = ndxv1(slovo) # je ve vyjímkách???
+    #flgv1 = ndxv1(slovo) # je ve vyjímkách???
+    flgv1 = @v1.transpose.slice(0).index(slovo)
+    if flgv1.nil?
+      flgv1 = -1
+    else
+      flgv1 = flgv1 / 3
+    end
 
     if flgv1 >= 0
       # pokud ano, bereme náhradu
@@ -660,11 +667,11 @@ module CzechDeclensions
     vndx = 0
 
     # Pretypovani rodu?
-    if ndxinvx(@v10,slovo) >= 0
+    if !@v10.index(slovo).nil?
       @prefrod = "m"
-    elsif ndxinvx(@v11,slovo) >= 0
+    elsif !@v11.index(slovo).nil?
       @prefrod = "ž"
-    elsif ndxinvx(@v12,slovo) >= 0
+    elsif !@v12.index(slovo).nil?
       @prefrod = "s"
     end
 
@@ -684,16 +691,7 @@ module CzechDeclensions
     end
   end
 
-  def ndxv1(slovo)
-    for v1i in 0...@v1.length do
-      if slovo == @v1[v1i][0]
-        return v1i
-      end
-    end
-    return -1
-  end
-
-  def xedeten(txt2)
+  def self.xedeten(txt2)
     xdetenerv = ""
     for xdetenei in 0...txt2.length-1 do
       if txt2[xdetenei] == "d" && (txt2[xdetenei + 1] == "ě" || txt2[xdetenei + 1]=="i")
@@ -727,7 +725,7 @@ module CzechDeclensions
     return xdetenerv
   end
 
-  def xdetene(txt2)
+  def self.xdetene(txt2)
     xdetenerv = ""
     for xdetenei in 0...txt2.length-1 do
       if txt2[xdetenei] == "ď" && (txt2[xdetenei + 1] == "e" || txt2[xdetenei + 1] == "i" || txt2[xdetenei + 1] == "í")
@@ -761,16 +759,7 @@ module CzechDeclensions
     return xdetenerv
   end
 
-  def ndxinvx(vx,slovo)
-    for vxi in 0...vx.length do
-      if slovo == vx[vxi]
-        return vxi
-      end
-    end
-    return -1
-  end
-
-  def stdndx(slovo)
+  def self.stdndx(slovo)
     for iii in 0...@vzor.length
       # filtrace rodu
       if  @prefrod[0] != "0" && @prefrod[0] != @vzor[iii][0][0]
@@ -789,7 +778,7 @@ module CzechDeclensions
     return iii
   end
 
-  def sklstd(slovo,ii)
+  def self.sklstd(slovo,ii)
 
     if ii < 0 || ii > @vzor.length
       @astrtvar[0] = "!!!???"
@@ -821,7 +810,7 @@ module CzechDeclensions
     end
   end
 
-  def sklon(npad,vzndx,txt)
+  def self.sklon(npad,vzndx,txt)
     if vzndx >= @vzor.length || vzndx < 0
       return "???"
     end
@@ -877,7 +866,7 @@ module CzechDeclensions
     #  return LeftStr( kndx, txt ) + vzor[vzndx][nPad];
   end
 
-  def cmpfrm(txt)
+  def self.cmpfrm(txt)
     cmpfrmrv = ""
     for cmpfrmi in 0...txt.length do
       if txt[cmpfrmi] == "0"
