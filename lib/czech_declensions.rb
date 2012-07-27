@@ -556,7 +556,7 @@ module CzechDeclensions
     
   end
 
-  def sklonovani(slovo,pad)
+  def self.sklonovani(slovo,pad)
     on_sklonuj(slovo)
     #puts @astrtvar.inspect
     return @astrtvar[pad]
