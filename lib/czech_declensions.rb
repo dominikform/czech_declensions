@@ -548,6 +548,7 @@ module CzechDeclensions
     @v3 << "zoe"
 
     @astrtvar = []
+    @vysledek = []
     @prefrod = "0"
 
     @ncmpreg = 0
@@ -559,8 +560,8 @@ module CzechDeclensions
   def self.sklonovani(slovo,pad)
     initialize
     on_sklonuj(slovo)
-    #puts @astrtvar.inspect
-    return @astrtvar[pad]
+    #puts @vysledek.inspect
+    return @vysledek[pad]
   end
 
   def self.on_sklonuj(vstup)
@@ -570,13 +571,21 @@ module CzechDeclensions
       # vysklonovani
       CzechDeclensions.skl2(slovo)
       # vynuceni rodu podle posledniho slova
-      @prefrod = @astrtvar[0][0] if slovo == slova.first
+      @prefrod = @astrtvar[0][0] if slovo == slova.reverse.first
       # pokud nenajdeme vzor tak nesklonujeme
       if slovo != slova.first &&  @astrtvar[0][0] == '?' && @prefrod[0] != '?'
         for j in 1..14 do
           @astrtvar[j] = slovo
         end
       end
+      for i in 0..14 do
+        if @vysledek[i].nil?
+          @vysledek[i] = @astrtvar[i]
+        else
+          @vysledek[i] = @astrtvar[i] + " " + @vysledek[i]
+        end
+      end
+      #puts @astrtvar.inspect
     end 
   end
 

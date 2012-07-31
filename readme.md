@@ -23,7 +23,7 @@ Alternatively, add the following to your Gemfile
 
 ## Usage
 
-		slovo = sklonovani("moje slovo",2) => "mojeho slova"
+    slovo = CzechDeclensions.sklonovani("moje slovo",2) => "mojeho slova"
 
 ## Contributing
 
