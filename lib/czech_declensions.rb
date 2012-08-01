@@ -164,6 +164,7 @@ module CzechDeclensions
     @vzor << [ "ž","-[gh]a","0y","ze","0u","0o","ze","0ou",   "-0y","0","0ám","0y","0y","0ách","0ami" ]
     @vzor << [ "ž","-ňa","ni","ně","ňou","ňo","ni","ňou",     "-ně/ničky","ň","ňám","ně/ničky","ně/ničky","ňách","ňami" ]
     @vzor << [ "ž","-[šč]a", "0i","0e","0u","0o","0e","0ou",  "-0e/0i","0","0ám","0e/0i","0e/0i","0ách","0ami" ]
+    # @vzor << [ "ž","-r", "r","ry","ře","ru","ro","ře","rou",      "-ry","r","rám","ry","ry","rách","rami" ]
     @vzor << [ "ž","-a", "y","e","u","o","e","ou",            "-y","","ám","y","y","ách","ami" ]
 
     # vz. píseň
@@ -491,7 +492,7 @@ module CzechDeclensions
   #  @v0 << "déšť"
     @v0 << "moře"
     @v0 << "Ester"
-    @v0 << "Dagmar"
+  #  @v0 << "Dagmar"
   #  @v0 << "vejce"
     @v0 << "housle"
     @v0 << "šle"
@@ -689,6 +690,7 @@ module CzechDeclensions
     
     if ii< 0
       puts "Chyba: proto toto slovo nebyl nalezen vzor."
+      return ""
     end
 
     # Vlastni sklonovani
@@ -796,9 +798,9 @@ module CzechDeclensions
     # - seznam nedoresenych slov
     for jj in 0...@v0.length
       if isshoda(@v0[jj], slovo) >= 0
-        str = "Seznam výjimek [" + jj + "]. "
+        str = "Seznam výjimek [" + jj.to_s + "]. "
         puts str + "Lituji, toto slovo zatím neumím správně vyskloňovat."
-        return
+        return 
       end
     end
 
