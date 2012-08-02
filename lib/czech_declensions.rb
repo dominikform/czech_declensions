@@ -164,7 +164,7 @@ module CzechDeclensions
     @vzor << [ "ž","-[gh]a","0y","ze","0u","0o","ze","0ou",   "-0y","0","0ám","0y","0y","0ách","0ami" ]
     @vzor << [ "ž","-ňa","ni","ně","ňou","ňo","ni","ňou",     "-ně/ničky","ň","ňám","ně/ničky","ně/ničky","ňách","ňami" ]
     @vzor << [ "ž","-[šč]a", "0i","0e","0u","0o","0e","0ou",  "-0e/0i","0","0ám","0e/0i","0e/0i","0ách","0ami" ]
-    @vzor << [ "ž","-r", "ry","ře","ru","ro","ře","rou",      "-ry","r","rám","ry","ry","rách","rami" ]
+    @vzor << [ "ž","Dagmar", "Dagmary","Dagmaře","Dagmaru","Dagmaro","Dagmaře","Dagmarou",      "Dagmary","Dagmar","Dagmarám","Dagmary","Dagmary","Dagmarách","Dagmarami" ]
     @vzor << [ "ž","-a", "y","e","u","o","e","ou",            "-y","","ám","y","y","ách","ami" ]
 
     # vz. píseň
