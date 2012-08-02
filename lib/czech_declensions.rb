@@ -164,7 +164,7 @@ module CzechDeclensions
     @vzor << [ "ž","-[gh]a","0y","ze","0u","0o","ze","0ou",   "-0y","0","0ám","0y","0y","0ách","0ami" ]
     @vzor << [ "ž","-ňa","ni","ně","ňou","ňo","ni","ňou",     "-ně/ničky","ň","ňám","ně/ničky","ně/ničky","ňách","ňami" ]
     @vzor << [ "ž","-[šč]a", "0i","0e","0u","0o","0e","0ou",  "-0e/0i","0","0ám","0e/0i","0e/0i","0ách","0ami" ]
-    # @vzor << [ "ž","-r", "r","ry","ře","ru","ro","ře","rou",      "-ry","r","rám","ry","ry","rách","rami" ]
+    @vzor << [ "ž","-r", "ry","ře","ru","ro","ře","rou",      "-ry","r","rám","ry","ry","rách","rami" ]
     @vzor << [ "ž","-a", "y","e","u","o","e","ou",            "-y","","ám","y","y","ách","ami" ]
 
     # vz. píseň
@@ -431,6 +431,10 @@ module CzechDeclensions
     @v10 << "alois"
     @v10 << "bartoloměj"
     @v10 << "Bartoloměj"
+    @v10 << "ernst"
+    @v10 << "Ernst"
+    @v10 << "ernest"
+    @v10 << "Ernest"
 
     # v11 - zmena rodu na zensky
     @v11 = []
@@ -552,9 +556,7 @@ module CzechDeclensions
     @vysledek = []
     @prefrod = "0"
 
-    @ncmpreg = 0
-    @acmpreg = ["","","","","","","","","","","",""]
-
+    @acmpreg = []    
     
   end
 
@@ -562,7 +564,7 @@ module CzechDeclensions
     initialize
     on_sklonuj(slovo)
     #puts @vysledek.inspect
-    return @vysledek[pad]
+    return [@vysledek[pad], @prefrod]
   end
 
   def self.on_sklonuj(vstup)
@@ -595,14 +597,14 @@ module CzechDeclensions
     vz = vz.mb_chars.downcase
     i = vz.mb_chars.length
     j = txt.mb_chars.length
+    
+    @acmpreg = [] if @acmpreg.nil?
 
     if i == 0 || j == 0
       return -1
     end
     i -= 1
     j -= 1
-
-    @ncmpreg = 0
 
     while i >= 0 && j >= 0 do
       if vz[i] == "]"
@@ -611,8 +613,7 @@ module CzechDeclensions
         while i >= 0 && vz[i] != "[" do
           if vz[i] == txt[j]
             quit = 0
-            @acmpreg[@ncmpreg] = vz[i]
-            @ncmpreg += 1
+            @acmpreg << vz[i]
           end
           i -= 1
         end
@@ -652,10 +653,9 @@ module CzechDeclensions
 
     #flgv1 = ndxv1(slovo) # je ve vyjímkách???
     flgv1 = @v1.transpose.slice(0).index(slovo)
+    
     if flgv1.nil?
       flgv1 = -1
-    else
-      flgv1 = flgv1 / 3
     end
 
     if flgv1 >= 0
@@ -704,20 +704,21 @@ module CzechDeclensions
 
   def self.xedeten(txt2)
     xdetenerv = ""
-    for xdetenei in 0...txt2.length-1 do
-      if txt2[xdetenei] == "d" && (txt2[xdetenei + 1] == "ě" || txt2[xdetenei + 1]=="i")
+    xdetenei = 0
+    while xdetenei < txt2.length do
+      if txt2[xdetenei] == "d" && (txt2[xdetenei + 1] == "ě" || txt2[xdetenei + 1] == "i")
         xdetenerv += "ď"
         if txt2[xdetenei + 1] == "ě"
           xdetenerv += "e"
           xdetenei += 1
         end
-      elsif txt2[xdetenei] == "t" && (txt2[xdetenei + 1] == "ě" || txt2[xdetenei + 1]=="i")
+      elsif txt2[xdetenei] == "t" && (txt2[xdetenei + 1] == "ě" || txt2[xdetenei + 1] == "i")
         xdetenerv += "ť"
         if txt2[xdetenei + 1] == "ě"
           xdetenerv += "e"
           xdetenei += 1
         end
-      elsif txt2[xdetenei] == "n" && (txt2[xdetenei + 1] == "ě" || txt2[xdetenei + 1]=="i")
+      elsif txt2[xdetenei] == "n" && (txt2[xdetenei + 1] == "ě" || txt2[xdetenei + 1] == "i")
         xdetenerv += "ň";
         if txt2[xdetenei + 1] == "ě"
           xdetenerv += "e"
@@ -726,6 +727,7 @@ module CzechDeclensions
       else
         xdetenerv += txt2[xdetenei]
       end
+      xdetenei += 1
     end
     
     xdetenei += 1
@@ -738,7 +740,8 @@ module CzechDeclensions
 
   def self.xdetene(txt2)
     xdetenerv = ""
-    for xdetenei in 0...txt2.length-1 do
+    xdetenei = 0
+    while xdetenei < txt2.length do
       if txt2[xdetenei] == "ď" && (txt2[xdetenei + 1] == "e" || txt2[xdetenei + 1] == "i" || txt2[xdetenei + 1] == "í")
         xdetenerv += "d"
         if txt2[xdetenei + 1] == "e"
@@ -760,6 +763,7 @@ module CzechDeclensions
       else
         xdetenerv += txt2[xdetenei]
       end
+      xdetenei += 1
     end
 
     xdetenei += 1
