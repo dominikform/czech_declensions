@@ -23,7 +23,7 @@ Alternatively, add the following to your Gemfile
 
 ## Usage
 
-    slovo = CzechDeclensions.sklonovani("moje slovo",2) => "mojeho slova"
+    slovo = CzechDeclensions.sklonovani("moje slovo", 2) => "mojeho slova"
 
 ## Contributing
 
@@ -33,5 +33,3 @@ The source code is hosted at [GitHub](http://github.com/dominikform/czech_declen
 
 Please don't touch the CHANGELOG in your pull requests, we'll add the appropriate CHANGELOG entries
 at release time.
-
-[![Build Status](https://secure.travis-ci.org/Shopify/active_merchant.png)](http://travis-ci.org/Shopify/active_merchant)

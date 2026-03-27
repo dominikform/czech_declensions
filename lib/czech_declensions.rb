@@ -236,12 +236,14 @@ module CzechDeclensions
     @vzor << ['ž', '-cha', 'chy', 'še', 'chu', 'cho', 'še', 'chou', '-chy', 'ch', 'chám', 'chy', 'chy', 'chách',
               'chami']
     @vzor << ['ž', '-[gh]a', '0y', 'ze', '0u', '0o', 'ze', '0ou',   '-0y', '0', '0ám', '0y', '0y', '0ách', '0ami']
-    @vzor << ['ž', '-ňa', 'ni', 'ně', 'ňou', 'ňo', 'ni', 'ňou',     '-ně/ničky', 'ň', 'ňám', 'ně/ničky', 'ně/ničky', 'ňách',
+    @vzor << ['ž', '-ňa', 'ni', 'ně', 'ňu', 'ňo', 'ně', 'ňou',     '-ně/ničky', 'ň', 'ňám', 'ně/ničky', 'ně/ničky', 'ňách',
               'ňami']
-    @vzor << ['ž', '-[šč]a', '0i', '0e', '0u', '0o', '0e', '0ou', '-0e/0i', '0', '0ám', '0e/0i', '0e/0i', '0ách',
+    @vzor << ['ž', '-[ščc]a', '0i', '0e', '0u', '0o', '0e', '0ou', '-0e/0i', '0', '0ám', '0e/0i', '0e/0i', '0ách',
               '0ami']
     @vzor << %w[ž Dagmar Dagmary Dagmaře Dagmaru Dagmaro Dagmaře Dagmarou Dagmary Dagmar
                 Dagmarám Dagmary Dagmary Dagmarách Dagmarami]
+    @vzor << %w[ž ester Ester Ester Ester Ester Ester Ester Ester Ester Ester Ester Ester Ester Ester]
+    @vzor << %w[ž miriam Miriam Miriam Miriam Miriam Miriam Miriam Miriam Miriam Miriam Miriam Miriam Miriam Miriam]
     @vzor << ['ž', '-a', 'y', 'e', 'u', 'o', 'e', 'ou', '-y', '', 'ám', 'y', 'y', 'ách', 'ami']
 
     # vz. píseň
@@ -258,6 +260,10 @@ module CzechDeclensions
     @vzor << ['ž', '-ice', 'ice', 'ici', 'ici', 'ice', 'ici', 'icí', '-ice', 'ic', 'icím', 'ice', 'ice', 'icích',
               'icemi']
     @vzor << ['ž', '-e', 'e', 'i', 'i', 'e', 'i', 'í', '-e', 'í', 'ím', 'e', 'e', 'ích', 'emi']
+
+    # Mužská jména zakončená na -ej/-ěj (Ondřej, Matěj, Bartoloměj)
+    @vzor << ['m', '-[eě]j', '0je', '0jovi', '0je', '0ji', '0jovi', '0jem', '-0jové', '0jů', '0jům', '0je', '0jové', '0jích',
+              '0ji']
 
     #
     # Vzor píseň
@@ -332,7 +338,7 @@ module CzechDeclensions
               '0ků', '0kům', '0ky', '0ky/0kové', '0cích', '0ky']
     @vzor << ['m', '-[k]',            '0u/0a', '0u/0ovi', '0/0a', '0u', '0u/0ovi', '0em', '-0y/0ové', '0ů',
               '0ům', '0y', '0y/0ové', 'cích', '0y']
-    @vzor << ['m', '-ch',             'chu/cha', 'chu/chovi', 'ch/cha', 'chu/cha', 'chu/chovi', 'chem', '-chy/chové',
+    @vzor << ['m', '-ch',             'chu/cha', 'chu/chovi', 'ch/cha', 'cha/chu', 'chu/chovi', 'chem', '-chy/chové',
               'chů', 'chům', 'chy', 'chy/chové', 'ších', 'chy']
     @vzor << ['m', '-[h]',            '0u/0a',   '0u/0ovi', '0/0a', '0u/0a', '0u/0ovi', '0em', '-0y/0ové', '0ů',
               '0ům', '0y', '0y/0ové', 'zích', '0y']
@@ -368,6 +374,9 @@ module CzechDeclensions
     @vzor << ['s', '-[sljřň]e', '0ete', '0eti', '0e', '0e', '0eti', '0etem', '0ata', '0at', '0atům', '0ata', '0ata',
               '0atech', '0aty']
     # @vzor << [ "ž","-cí",        "cí", "cí",  "cí", "cí", "cí", "cí",   "cí", "cích", "cím", "cí", "cí", "cích", "cími" ]
+    # Juraj, Jurij (slovenská/cizí jména na -aj/-ij) — musí být před obecným -j
+    @vzor << ['m', 'juraj', 'Juraje', 'Jurajovi', 'Juraje', 'Juraji', 'Jurajovi', 'Jurajem', 'Jurajové', 'Jurajů', 'Jurajům', 'Juraje', 'Jurajové', 'Jurajích', 'Juraji']
+    @vzor << ['m', 'jurij', 'Jurije', 'Jurijovi', 'Jurije', 'Juriji', 'Jurijovi', 'Jurijem', 'Jurijové', 'Jurijů', 'Jurijům', 'Jurije', 'Jurijové', 'Jurijích', 'Juriji']
     # čaj, prodej, Ondřej, žokej
     @vzor << ['m', '-j',        'je',  'ji', 'j', 'ji', 'ji', 'jem', 'je/jové', 'jů', 'jům', 'je', 'je/jové',
               'jích', 'ji']
@@ -378,10 +387,14 @@ module CzechDeclensions
     # jiří, podkoní, ... ?
     @vzor << ['m', '-í',        'ího', 'ímu', 'ího', 'í', 'ímu', 'ím',    'í', 'ích', 'ím', 'í', 'í', 'ích', 'ími']
     # Hugo
-    @vzor << ['m', '-go', 'a', 'govi', 'ga', 'ga', 'govi', 'gem', 'gové', 'gů', 'gům', 'gy', 'gové',
+    @vzor << ['m', '-go', 'ga', 'govi', 'ga', 'go', 'govi', 'gem', 'gové', 'gů', 'gům', 'gy', 'gové',
               'zích', 'gy']
+    # René
+    @vzor << ['m', 'rené', 'Reného', 'Renému', 'Reného', 'René', 'Reném', 'Reném', 'Renové', 'Renů', 'Renům', 'Reny', 'Renové', 'Renech', 'Reny']
+    # Oto (skloňuje se odlišně od ostatních -o jmen)
+    @vzor << ['m', 'oto', 'Oty', 'Otovi', 'Otu', 'Oto', 'Otovi', 'Otou', 'Otové', 'Otů', 'Otům', 'Oty', 'Otové', 'Otech', 'Oty']
     # Kvido
-    @vzor << ['m', '-o', 'a', 'ovi', 'a', 'a', 'ovi', 'em', 'ové', 'ů', 'ům', 'y', 'ové', 'ech', 'y']
+    @vzor << ['m', '-o', 'a', 'ovi', 'a', 'o', 'ovi', 'em', 'ové', 'ů', 'ům', 'y', 'ové', 'ech', 'y']
 
     # doplňky
     # některá pomnožná jména
@@ -532,6 +545,14 @@ module CzechDeclensions
     @v10 << 'mikoláš'
     @v10 << 'Kvido'
     @v10 << 'kvido'
+    @v10 << 'Kvído'
+    @v10 << 'kvído'
+    @v10 << 'Leoš'
+    @v10 << 'leoš'
+    @v10 << 'Luboš'
+    @v10 << 'luboš'
+    @v10 << 'Miloš'
+    @v10 << 'miloš'
     @v10 << 'Hugo'
     @v10 << 'hugo'
     @v10 << 'Oto'
@@ -552,6 +573,18 @@ module CzechDeclensions
     @v10 << 'Ernst'
     @v10 << 'ernest'
     @v10 << 'Ernest'
+    @v10 << 'Gejza'
+    @v10 << 'gejza'
+    @v10 << 'Juraj'
+    @v10 << 'juraj'
+    @v10 << 'Jurij'
+    @v10 << 'jurij'
+    @v10 << 'René'
+    @v10 << 'rené'
+    @v10 << 'Stano'
+    @v10 << 'stano'
+    @v10 << 'Zdenko'
+    @v10 << 'zdenko'
 
     # v11 - zmena rodu na zensky
     @v11 = []
@@ -587,6 +620,7 @@ module CzechDeclensions
     @v11 << 'Miriam'
     @v11 << 'miriam'
     @v11 << 'Ester'
+    @v11 << 'ester'
     @v11 << 'Dagmar'
 
     # @v11 << "transmise"
@@ -611,7 +645,7 @@ module CzechDeclensions
     #  @v0 << "josef"
     #  @v0 << "déšť"
     @v0 << 'moře'
-    @v0 << 'Ester'
+    # @v0 << 'Ester'
     #  @v0 << "Dagmar"
     #  @v0 << "vejce"
     @v0 << 'housle'
@@ -629,8 +663,8 @@ module CzechDeclensions
     @v0 << 'muka'
     @v0 << 'noe'
     @v0 << 'Noe'
-    @v0 << 'Miriam'
-    @v0 << 'miriam'
+    # @v0 << 'Miriam'
+    # @v0 << 'miriam'
     # Je Nikola ženské nebo mužské jméno??? (podobně Sáva)
 
     # v3 - různé odchylky ve skloňování
@@ -708,12 +742,12 @@ module CzechDeclensions
   end
 
   def self.isshoda(vz, txt)
-    txt = txt.mb_chars.downcase
-    vz = vz.mb_chars.downcase
-    i = vz.mb_chars.length
-    j = txt.mb_chars.length
+    txt = txt.downcase
+    vz = vz.downcase
+    i = vz.length
+    j = txt.length
 
-    @acmpreg = [] if @acmpreg.nil?
+    @acmpreg = []
 
     return -1 if i.zero? || j.zero?
 
@@ -829,9 +863,6 @@ module CzechDeclensions
       xdetenei += 1
     end
 
-    xdetenei += 1
-    xdetenerv += txt2[xdetenei] if xdetenei == txt2.length - 1
-
     xdetenerv
   end
 
@@ -863,48 +894,50 @@ module CzechDeclensions
       xdetenei += 1
     end
 
-    xdetenei += 1
-    xdetenerv += txt2[xdetenei] if xdetenei == txt2.length - 1
-
     xdetenerv
   end
 
   def self.stdndx(slovo)
+    result = -1
     (0...@vzor.length).each do |iii|
       # filtrace rodu
       next if @prefrod[0] != '0' && @prefrod[0] != @vzor[iii][0][0]
 
-      break if isshoda(@vzor[iii][1], slovo) >= 0
+      if isshoda(@vzor[iii][1], slovo) >= 0
+        result = iii
+        break
+      end
     end
 
-    return -1 if iii >= @vzor.length
-
-    iii
+    result
   end
 
-  def self.sklstd(slovo, ii)
-    @astrtvar[0] = '!!!???' if ii.negative? || ii > @vzor.length
+  def self.sklstd(slovo, index)
+    if index.negative? || index > @vzor.length
+      @astrtvar[0] = '!!!???'
+      return
+    end
 
     # - seznam nedoresenych slov
-    (0...@v0.length).each do |jj|
-      next unless isshoda(@v0[jj], slovo) >= 0
+    (0...@v0.length).each do |j|
+      next unless isshoda(@v0[j], slovo) >= 0
 
-      str = "Seznam výjimek [#{jj}]. "
+      str = "Seznam výjimek [#{j}]. "
       puts "#{str}Lituji, toto slovo zatím neumím správně vyskloňovat."
       return
     end
 
     # nastaveni rodu
-    @astrtvar[0] = @vzor[ii][0]
+    @astrtvar[0] = @vzor[index][0]
 
     # vlastni sklonovani
-    (1...15).each do |jj|
-      @astrtvar[jj] = sklon(jj, ii, slovo)
+    (1...15).each do |j|
+      @astrtvar[j] = sklon(j, index, slovo)
     end
 
     # - seznam nepresneho sklonovani
-    (0...@v3.length).each do |jj|
-      if isshoda(@v3[jj], slovo) >= 0
+    (0...@v3.length).each do |j|
+      if isshoda(@v3[j], slovo) >= 0
         puts 'Pozor, v některých pádech nemusí být skloňování tohoto slova přesné.'
         return
       end
@@ -920,7 +953,7 @@ module CzechDeclensions
 
     return '?' if @vzor[vzndx][npad] == '?'
 
-    rv = if !@isdbgmode & npad == 1 # 1. pad nemenime
+    rv = if !@isdbgmode && npad == 1 # 1. pad nemenime
            xdetene(txt3)
          else
            "#{txt3[0...kndx]}-#{cmpfrm(@vzor[vzndx][npad])}"
